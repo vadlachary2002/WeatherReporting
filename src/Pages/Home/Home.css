@@ -1,0 +1,10 @@
+.home{
+  padding: 10px;
+}
+.home h2{
+  display: flex;
+  margin: auto;
+  text-align: center;
+  padding: 10px;
+  justify-content: center;
+}
