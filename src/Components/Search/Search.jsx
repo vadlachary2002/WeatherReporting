@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import './Search.css';
 import axios  from 'axios';
-const instance = axios.create({
-  withCredentials: true,
-  
-});
 const Search = (props) => {
 
   const { setInfo } = props;
