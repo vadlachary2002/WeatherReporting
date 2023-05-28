@@ -1,39 +1,45 @@
 import React, { useState } from "react";
 import './Search.css';
 import axios  from 'axios';
+const instance = axios.create({
+  withCredentials: true,
+  
+});
+const Search = (props) => {
 
-const Search = () => {
-
+  const { setInfo } = props;
   const [ city, setCity ] = useState('');
   const [ loading, setLoading ] = useState(false);
+  const [ error, setError ] =  useState('');
 
   const updateCity = (e)=>{
     const { value } = e.target;
-    if(value.trim()===""){
-      return ;
-    }
     setCity(value);
   }
   const onSubmit = async (e)=>{
     e.preventDefault();
+    setLoading(true);
     try{
-      const options = {
-        method:'GET',
-        url: 'https://us-weather-by-city.p.rapidapi.com/getweather',
-        params:{
-          city:'San Francisco',
-          state: 'CA'
-        },
-        headers:{
-          'X-RapidAPI-Key':'SIGN-UP-FOR-KEY',
-          'X-RapidAPI-Host':'us-weather-by-city.p.rapidapi.com'
-        }
-      }
-      const res = await axios.request(options);
+      const res = await axios.get('http://api.weatherstack.com/current',{params: {access_key:"8655ce31b7089d0b85e43253507f9824",query: city}});
       console.log(res);
+      if(!res.data.success){
+        setLoading(false);
+        setError("Api error");
+        return ;
+      }
+      console.log("uhh");
+      setLoading(false);
+      setInfo(res.data);
+      
     }catch(error){
+      setLoading(false);
+      setError("Api error");
       console.log(error.response);
     }
+    setLoading(false);
+    setTimeout(() => {
+      setError('');
+    }, 2000);
   }
   return (
     <div className="search">
@@ -42,9 +48,9 @@ const Search = () => {
             <input id="search" type="search" className="searchInput" onChange={updateCity} value={city} placeholder="Enter City"  />
             <input type="submit"  value="Search"/>
           </div>
-          
       </form>
       {loading && <div className="loading">Loading...</div>}
+      {error && <div className="loading error">{error}</div>}
     </div>
   )
 

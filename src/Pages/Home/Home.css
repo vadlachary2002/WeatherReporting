@@ -1,6 +1,20 @@
 .home{
   padding: 10px;
 }
+.home .flex{
+  display: flex;
+  justify-content: center;
+}
+.home .flex .default-btn{
+  width: max-content;
+  background-color: rgb(76, 76, 254);
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  width: 120px;
+  height: 40px;
+  color: #eee;
+}
 .home h2{
   display: flex;
   margin: auto;
